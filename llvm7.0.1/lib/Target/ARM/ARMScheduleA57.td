@@ -91,7 +91,7 @@ def CortexA57Model : SchedMachineModel {
 
   // Enable partial & runtime unrolling.
   let LoopMicroOpBufferSize = 16;
-  let CompleteModel = 1;
+  let CompleteModel = 0;
 
   // FIXME: Remove when all errors have been fixed.
   let FullInstRWOverlapCheck = 0;
