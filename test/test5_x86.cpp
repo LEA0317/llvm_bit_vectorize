@@ -76,7 +76,9 @@ int main(void) {
 		   0,0,0,0,0,0,0,0,
 		   0,0,0,0,0,0,1,1};
   v32i1 a = bitvector::build(array1);
-  v32i1 b = bitvector::build(array2);  
+  v32i1 b = bitvector::build(array2);
+  std::cout << "b" << std::endl;
+  bitvector::dump(b);
   std::cout << "inverse of b" << std::endl;
   bitvector::dump(bitvector::neg(b));
   
