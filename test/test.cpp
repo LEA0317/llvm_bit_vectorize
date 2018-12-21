@@ -1,5 +1,3 @@
-typedef bool v32i1 __attribute__((ext_vector_type(32)));
-
 int test(bool **b) {
   int a;
 
@@ -12,14 +10,5 @@ int test(bool **b) {
     (*b[24] << 24 | (*b[25] << 25) | (*b[26] << 26) | (*b[27] << 27) |
      *b[28] << 28 | (*b[29] << 29) | (*b[30] << 30) | (*b[31] << 31));        
   
-  return a;
-}
-
-// wanna compile (should bitconvert, but no way)
-unsigned int test2(bool **b) {
-  v32i1 a;
-  for (int i=0; i<32; i++) {
-    a[i] = *b[i];
-  }
   return a;
 }
