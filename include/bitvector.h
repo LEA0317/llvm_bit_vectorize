@@ -27,6 +27,7 @@ namespace bitvector {
     return a * b;
   }
 
+  // clang optimize this code (so, simple implementation)
   v32i1 zeros(void) {
     v32i1 a;
     for (int i=0; i<32; i++) {
@@ -35,6 +36,7 @@ namespace bitvector {
     return a;
   }
 
+  // clang optimize this code (so, simple implementation)
   v32i1 ones(void) {
     v32i1 a;
     for (int i=0; i<32; i++) {
