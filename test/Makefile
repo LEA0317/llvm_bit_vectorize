@@ -1,6 +1,6 @@
 #DEBUG= -debug
 
-all: test.s test2.s test3.s
+all: test.s test2.s test3.out test3_x86.out test4_ng.out
 
 llvm:
 	@echo "** build llvm **"
@@ -8,7 +8,7 @@ llvm:
 
 clean:
 	@echo "** remove generated files **"
-	rm *.ll *~ *.s
+	rm *.ll *~ *.s *.out
 
 test.s:
 	@echo "**  test  **"
@@ -17,8 +17,6 @@ test.s:
 	../llvm7.0.1/build/bin/llc -march=arm -O3 test.ll $(DEBUG)
 	../llvm7.0.1/build/bin/clang++ --target=arm-linux-gnueabihf -mcpu=cortex-a9 \
 		-mthumb -mfpu=neon -mfloat-abi=hard -S -std=c++11 -O3 test.cpp
-#../llvm7.0.1/build/bin/clang++ --target=arm-linux-gnueabihf -mcpu=cortex-a9 \
-		-mthumb -mfpu=neon -mfloat-abi=hard -std=c++11 -O3 test.cpp
 
 test2.s:
 	@echo "**  test2  **"
@@ -27,16 +25,29 @@ test2.s:
 	../llvm7.0.1/build/bin/llc -march=arm -O3 test2.ll $(DEBUG)
 	../llvm7.0.1/build/bin/clang++ --target=arm-linux-gnueabihf -mcpu=cortex-a9 \
 		-mthumb -mfpu=neon -mfloat-abi=hard -S -std=c++11 -O3 test2.cpp
-#../llvm7.0.1/build/bin/clang++ --target=arm-linux-gnueabihf -mcpu=cortex-a9 \
-		-mthumb -mfpu=neon -mfloat-abi=hard -std=c++11 -O3 test.cpp
 
-test3.s:
-	@echo "**  test3  **"
+test3.out:
+	@echo "**  test3(arm)  **"
 	../llvm7.0.1/build/bin/clang++ --target=arm-linux-gnueabihf -mcpu=cortex-a9 \
 		-mthumb -mfpu=neon -mfloat-abi=hard -S -emit-llvm -std=c++11 -O3 test3.cpp
 	../llvm7.0.1/build/bin/llc -march=arm -O3 test3.ll $(DEBUG)
 	../llvm7.0.1/build/bin/clang++ --target=arm-linux-gnueabihf -mcpu=cortex-a9 \
 		-mthumb -mfpu=neon -mfloat-abi=hard -S -std=c++11 -O3 test3.cpp
-#../llvm7.0.1/build/bin/clang++ --target=arm-linux-gnueabihf -mcpu=cortex-a9 \
-		-mthumb -mfpu=neon -mfloat-abi=hard -std=c++11 -O3 test.cpp
+	../llvm7.0.1/build/bin/clang++ --target=arm-linux-gnueabihf -mcpu=cortex-a9 \
+		-mthumb -mfpu=neon -mfloat-abi=hard -std=c++11 -O3 test3.cpp
 
+test3_x86.out:
+	@echo "**  test3(x86)  **"
+	../llvm7.0.1/build/bin/clang++ -march=core-avx2 \
+		-std=c++11 -O3 test3_x86.cpp -o test3_x86.out
+
+
+test4_ng.out:
+	@echo "**  test4(arm)  **"
+	../llvm7.0.1/build/bin/clang++ --target=arm-linux-gnueabihf -mcpu=cortex-a9 \
+		-mthumb -mfpu=neon -mfloat-abi=hard -S -emit-llvm -std=c++11 -O3 test4_ng.cpp
+	../llvm7.0.1/build/bin/llc -march=arm -O3 test4_ng.ll $(DEBUG)
+	../llvm7.0.1/build/bin/clang++ --target=arm-linux-gnueabihf -mcpu=cortex-a9 \
+		-mthumb -mfpu=neon -mfloat-abi=hard -S -std=c++11 -O3 test4_ng.cpp
+	../llvm7.0.1/build/bin/clang++ --target=arm-linux-gnueabihf -mcpu=cortex-a9 \
+		-mthumb -mfpu=neon -mfloat-abi=hard -std=c++11 -O3 test4_ng.cpp
