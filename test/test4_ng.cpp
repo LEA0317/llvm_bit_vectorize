@@ -1,7 +1,7 @@
 typedef bool v32i1 __attribute__((ext_vector_type(32)));
 
 namespace bitvector {
-  v32i1 convert_to_vector(bool *b) {
+  v32i1 build(bool *b) {
     v32i1 a;
     for (int i=0; i<32; i++) {
       a[i] = b[i];
@@ -10,7 +10,7 @@ namespace bitvector {
   }
 
   // how to implement this...
-  int get_vector_as_int(v32i1 a) {
+  int get(v32i1 a) {
     return __builtin_arm_p_mov(a);
   }
   
@@ -28,10 +28,10 @@ int main(void) {
 		   0,0,0,0,0,0,0,0,
 		   0,0,0,0,0,0,0,0,
 		   0,0,0,0,0,0,1,1};
-  v32i1 a = bitvector::test(array1);
-  v32i1 b = bitvector::test(array2);  
+  v32i1 a = bitvector::build(array1);
+  v32i1 b = bitvector::build(array2);  
 
   v32i1 ret = bitvector::mult(a, b); // cannot convert return value for now
 
-  return bitvector::get_vector_as_int(ret);
+  return bitvector::get(ret);
 }
