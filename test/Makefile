@@ -34,10 +34,12 @@ test3.out:
 	../llvm7.0.1/build/bin/clang++ --target=arm-linux-gnueabihf -mcpu=cortex-a9 \
 		-mthumb -mfpu=neon -mfloat-abi=hard -S -std=c++11 -O3 test3.cpp
 	../llvm7.0.1/build/bin/clang++ --target=arm-linux-gnueabihf -mcpu=cortex-a9 \
-		-mthumb -mfpu=neon -mfloat-abi=hard -std=c++11 -O3 test3.cpp
+		-mthumb -mfpu=neon -mfloat-abi=hard -std=c++11 -O3 test3.cpp -o test3.out
 
 test3_x86.out:
 	@echo "**  test3(x86)  **"
+	../llvm7.0.1/build/bin/clang++ -march=core-avx2 \
+		-S -std=c++11 -O3 test3_x86.cpp
 	../llvm7.0.1/build/bin/clang++ -march=core-avx2 \
 		-std=c++11 -O3 test3_x86.cpp -o test3_x86.out
 
