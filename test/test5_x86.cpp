@@ -36,6 +36,34 @@ namespace bitvector {
   v32i1 mult(v32i1 a, v32i1 b) {
     return a * b;
   }
+
+  v32i1 add(v32i1 a, v32i1 b) {
+    return a + b;
+  }
+
+  v32i1 sub(v32i1 a, v32i1 b) {
+    return a - b;
+  }
+
+  v32i1 neg(v32i1 a) {
+    return ~a;
+  }  
+
+  v32i1 zeros(void) {
+    v32i1 a;
+    for (int i=0; i<32; i++) {
+      a[i] = 0;
+    }
+    return a;
+  }
+
+  v32i1 ones(void) {
+    v32i1 a;
+    for (int i=0; i<32; i++) {
+      a[i] = 1;
+    }
+    return a;
+  }
 }
 
 int main(void) {
@@ -49,10 +77,12 @@ int main(void) {
 		   0,0,0,0,0,0,1,1};
   v32i1 a = bitvector::build(array1);
   v32i1 b = bitvector::build(array2);  
-
+  std::cout << "inverse of b" << std::endl;
+  bitvector::dump(bitvector::neg(b));
+  
   v32i1 ret = bitvector::mult(a, b);
 
-  std::cout << "vector" << std::endl;
+  std::cout << "result vector" << std::endl;
   bitvector::dump(ret);
   std::cout << "scalar: " << bitvector::get(ret) << std::endl;
   

@@ -23,6 +23,22 @@ namespace bitvector {
   v32i1 mult(v32i1 a, v32i1 b) {
     return a * b;
   }
+
+  v32i1 zeros(void) {
+    v32i1 a;
+    for (int i=0; i<32; i++) {
+      a[i] = 0;
+    }
+    return a;
+  }
+
+  v32i1 ones(void) {
+    v32i1 a;
+    for (int i=0; i<32; i++) {
+      a[i] = 1;
+    }
+    return a;
+  }
 }
 
 int main(void) {

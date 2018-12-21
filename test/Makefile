@@ -1,6 +1,6 @@
 #DEBUG= -debug
 
-all: test.s test2.s test3.out test3_x86.out test4.out test4_x86.out
+all: test.s test2.s test3.out test3_x86.out test4.out test4_x86.out test5.out test5_x86.out
 
 llvm:
 	@echo "** build llvm **"
@@ -59,3 +59,20 @@ test4_x86.out:
 		-S -std=c++11 -O3 test4_x86.cpp
 	../llvm7.0.1/build/bin/clang++ -march=core-avx2 \
 		-std=c++11 -O3 test4_x86.cpp -o test4_x86.out
+
+test5.out:
+	@echo "**  test5(arm)  **"
+	../llvm7.0.1/build/bin/clang++ --target=arm-linux-gnueabihf -mcpu=cortex-a9 \
+		-mthumb -mfpu=neon -mfloat-abi=hard -S -emit-llvm -std=c++11 -O3 test5.cpp
+	../llvm7.0.1/build/bin/llc -march=arm -O3 test5.ll $(DEBUG)
+	../llvm7.0.1/build/bin/clang++ --target=arm-linux-gnueabihf -mcpu=cortex-a9 \
+		-mthumb -mfpu=neon -mfloat-abi=hard -S -std=c++11 -O3 test5.cpp
+	../llvm7.0.1/build/bin/clang++ --target=arm-linux-gnueabihf -mcpu=cortex-a9 \
+		-mthumb -mfpu=neon -mfloat-abi=hard -std=c++11 -O3 test5.cpp -o test5.out
+
+test5_x86.out:
+	@echo "**  test5(x86)  **"
+	../llvm7.0.1/build/bin/clang++ -march=core-avx2 \
+		-S -std=c++11 -O3 test5_x86.cpp
+	../llvm7.0.1/build/bin/clang++ -march=core-avx2 \
+		-std=c++11 -O3 test5_x86.cpp -o test5_x86.out
