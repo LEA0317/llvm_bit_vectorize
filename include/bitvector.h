@@ -12,6 +12,15 @@ namespace bitvector {
     return a;
   }
 
+  v32i1 convert(uint32_t i) {
+    union ret_t {
+      v32i1    vec;
+      uint32_t ret_i;
+    } t;
+    t.ret_i = i;
+    return t.vec;
+  }
+  
   unsigned int get(v32i1 a) {
     union ret_t {
       v32i1        vec;
@@ -27,6 +36,18 @@ namespace bitvector {
     return a * b;
   }
 
+  v32i1 add(v32i1 a, v32i1 b) {
+    return a + b;
+  }
+
+  v32i1 sub(v32i1 a, v32i1 b) {
+    return a - b;
+  }
+
+  v32i1 neg(v32i1 a) {
+    return ~a;
+  }
+  
   // clang optimize this code (so, simple implementation)
   v32i1 zeros(void) {
     v32i1 a;
