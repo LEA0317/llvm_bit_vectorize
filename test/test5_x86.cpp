@@ -63,7 +63,7 @@ namespace bitvector {
     for (int i=0; i<32; i++) {
       a[i] = 0;
     }
-    return sub(a, a);
+    return a;
   }
 
   v32i1 ones(void) {
