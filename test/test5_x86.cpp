@@ -11,6 +11,15 @@ namespace bitvector {
     return a;
   }
 
+  v32i1 convert(uint32_t i) {
+    union ret_t {
+      v32i1    vec;
+      uint32_t ret_i;
+    } t;
+    t.ret_i = i;
+    return t.vec;
+  }  
+
   unsigned int get(v32i1 a) {
     union ret_t {
       v32i1    vec;
@@ -54,7 +63,7 @@ namespace bitvector {
     for (int i=0; i<32; i++) {
       a[i] = 0;
     }
-    return a;
+    return sub(a, a);
   }
 
   v32i1 ones(void) {
@@ -81,6 +90,10 @@ int main(void) {
   bitvector::dump(b);
   std::cout << "inverse of b" << std::endl;
   bitvector::dump(bitvector::neg(b));
+
+  std::cout << "converted vector" << std::endl;
+  v32i1 c = bitvector::convert(11);
+  bitvector::dump(c);
   
   v32i1 ret = bitvector::mult(a, b);
 
