@@ -127,5 +127,5 @@ int main(void) {
   bitvector::dump(ret);
   //std::cout << "scalar: " << bitvector::get(ret) << std::endl;
   
-  return bitvector::get(ret);
+  return 0; //bitvector::get(ret);
 }
