@@ -1,5 +1,6 @@
 #include <iostream>
 
+// not good codegen
 typedef bool v64i1 __attribute__((ext_vector_type(64)));
 
 namespace bitvector {

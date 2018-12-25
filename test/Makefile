@@ -1,6 +1,7 @@
 #DEBUG= -debug
 
-all: test.s test2.s test3.out test3_x86.out test4_arm.out test4_x86.out test5_arm.out test5_x86.out test6_x86.out
+all: test.s test2.s test3.out test3_x86.out test4_arm.out test4_x86.out \
+	test5_arm.out test5_x86.out test6_x86.out test7_x86.out
 
 llvm:
 	@echo "** build llvm **"
@@ -101,3 +102,10 @@ test6_x86.out:
 		-S -std=c++11 -O3 test6_x86.cpp
 	../llvm7.0.1/build/bin/clang++ -march=core-avx2 \
 		-std=c++11 -O3 test6_x86.cpp -o test6_x86.out
+
+test7_x86.out:
+	@echo "**  test7(x86)  **"
+	../llvm7.0.1/build/bin/clang++ -march=core-avx2 \
+		-S -std=c++11 -O3 test7_x86.cpp
+	../llvm7.0.1/build/bin/clang++ -march=core-avx2 \
+		-std=c++11 -O3 test7_x86.cpp -o test7_x86.out

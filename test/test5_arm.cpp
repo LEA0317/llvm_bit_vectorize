@@ -22,8 +22,8 @@ namespace bitvector {
   
   unsigned int get(v32i1 a) {
     union ret_t {
-      v32i1        vec;
-      unsigned int ret_i;
+      v32i1    vec;
+      uint32_t ret_i;
     } t;
     for (int i=0; i<32; i++) {
       t.vec[i] = a[i];

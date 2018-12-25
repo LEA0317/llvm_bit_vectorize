@@ -1,5 +1,6 @@
 #include <iostream>
 
+// too long vector length
 typedef bool v128i1 __attribute__((ext_vector_type(128)));
 
 namespace bitvector {
