@@ -1,3 +1,5 @@
+#include <iostream>
+
 #ifndef __HEADER_LOWBIT_VECTOR__
 #define __HEADER_LOWBIT_VECTOR__
 
@@ -21,14 +23,12 @@ namespace bitvector {
     return t.vec;
   }
   
-  unsigned int get(v32i1 a) {
+  uint32_t get(v32i1 a) {
     union ret_t {
-      v32i1        vec;
-      unsigned int ret_i;
+      v32i1    vec;
+      uint32_t ret_i;
     } t;
-    for (int i=0; i<32; i++) {
-      t.vec[i] = a[i];
-    }
+    t.vec = a;
     return t.ret_i;
   }
 
@@ -64,6 +64,17 @@ namespace bitvector {
       a[i] = 1;
     }
     return a;
+  }
+
+  void dump(v32i1 a) {
+    int count=0;
+    for (int i=0; i<4; i++) {
+      for (int j=0; j<8; j++) {
+	std::cout << a[count] << " ";
+	count++;
+      }
+      std::cout << std::endl;
+    }
   }
 }
 
