@@ -10,6 +10,7 @@ Target: X86 / ARM
 
 # ARM
 ```
+ -> 16bit  case : OK
  -> 32bit  case : NG
  -> 64bit  case : NG
  -> 128bit case : NG
