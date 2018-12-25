@@ -1,7 +1,7 @@
 #DEBUG= -debug
 
 all: test.s test2.s test3.out test3_x86.out test4_arm.out test4_x86.out \
-	test5_arm.out test5_x86.out test6_x86.out test7_x86.out test8_arm.out
+	test5_arm.out test5_x86.out test6_x86.out test7_x86.out test8_arm.out test9_arm.out
 
 llvm:
 	@echo "** build llvm **"
@@ -132,9 +132,22 @@ test8_arm.out:
                 -I../third/clang+llvm-7.0.0-armv7a-linux-gnueabihf/lib/clang/7.0.0/include/ \
 		-L../third/clang+llvm-7.0.0-armv7a-linux-gnueabihf/lib/
 
-bitvector.out:
-	@echo "**  class test  **"
-	../llvm7.0.1/build/bin/clang++ -march=core-avx2 \
-		-S -std=c++11 -O3 bitvector.cpp
-	../llvm7.0.1/build/bin/clang++ -march=core-avx2 \
-		-std=c++11 -O3 bitvector.cpp -o bitvector.out
+test9_arm.out:
+	@echo "**  test9(arm)  **"
+	../llvm7.0.1/build/bin/clang++ --target=arm-linux-gnueabihf -mcpu=cortex-a9 \
+		-mthumb -mfpu=neon -mfloat-abi=hard -S -emit-llvm -std=c++11 -stdlib=libc++ -O3 test9_arm.cpp \
+		-I/usr/arm-linux-gnueabihf/include/ -I../third/clang+llvm-7.0.0-armv7a-linux-gnueabihf/include/c++/v1/ \
+                -I../third/clang+llvm-7.0.0-armv7a-linux-gnueabihf/lib/clang/7.0.0/include/ \
+		-L../third/clang+llvm-7.0.0-armv7a-linux-gnueabihf/lib/
+	../llvm7.0.1/build/bin/llc -march=arm -O3 test9_arm.ll $(DEBUG)
+	../llvm7.0.1/build/bin/clang++ --target=arm-linux-gnueabihf -mcpu=cortex-a9 \
+		-mthumb -mfpu=neon -mfloat-abi=hard -S -std=c++11 -stdlib=libc++ -O3 test9_arm.cpp \
+		-I/usr/arm-linux-gnueabihf/include/ -I../third/clang+llvm-7.0.0-armv7a-linux-gnueabihf/include/c++/v1/ \
+                -I../third/clang+llvm-7.0.0-armv7a-linux-gnueabihf/lib/clang/7.0.0/include/ \
+		-L../third/clang+llvm-7.0.0-armv7a-linux-gnueabihf/lib/
+	../llvm7.0.1/build/bin/clang++ --target=arm-linux-gnueabihf -mcpu=cortex-a9 \
+		-mthumb -mfpu=neon -mfloat-abi=hard -std=c++11 -stdlib=libc++ -O3 test9_arm.cpp -o test9_arm.out \
+		-I/usr/arm-linux-gnueabihf/include/ -I../third/clang+llvm-7.0.0-armv7a-linux-gnueabihf/include/c++/v1/ \
+                -I../third/clang+llvm-7.0.0-armv7a-linux-gnueabihf/lib/clang/7.0.0/include/ \
+		-L../third/clang+llvm-7.0.0-armv7a-linux-gnueabihf/lib/
+
