@@ -92,6 +92,9 @@ test5_arm.out:
 test5_x86.out:
 	@echo "**  test5(x86)  **"
 	../llvm7.0.1/build/bin/clang++ -march=core-avx2 \
+		-S -emit-llvm -std=c++11 -O3 test5_x86.cpp
+	../llvm7.0.1/build/bin/llc -march=x86 -O3 test5_x86.ll $(DEBUG)
+	../llvm7.0.1/build/bin/clang++ -march=core-avx2 \
 		-S -std=c++11 -O3 test5_x86.cpp
 	../llvm7.0.1/build/bin/clang++ -march=core-avx2 \
 		-std=c++11 -O3 test5_x86.cpp -o test5_x86.out

@@ -28,7 +28,7 @@ namespace bitvector {
     t.vec = a;
     return t.ret_i;
   }
-  
+
   v32i1 mult(v32i1 a, v32i1 b) {
     return a * b;
   }
