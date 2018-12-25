@@ -1,6 +1,6 @@
 #DEBUG= -debug
 
-all: test.s test2.s test3.out test3_x86.out test4.out test4_x86.out test5.out test5_x86.out test6_x86.out
+all: test.s test2.s test3.out test3_x86.out test4_arm.out test4_x86.out test5_arm.out test5_x86.out test6_x86.out
 
 llvm:
 	@echo "** build llvm **"
@@ -43,15 +43,24 @@ test3_x86.out:
 	../llvm7.0.1/build/bin/clang++ -march=core-avx2 \
 		-std=c++11 -O3 test3_x86.cpp -o test3_x86.out
 
-test4.out:
+test4_arm.out:
 	@echo "**  test4(arm)  **"
 	../llvm7.0.1/build/bin/clang++ --target=arm-linux-gnueabihf -mcpu=cortex-a9 \
-		-mthumb -mfpu=neon -mfloat-abi=hard -S -emit-llvm -std=c++11 -O3 test4.cpp
-	../llvm7.0.1/build/bin/llc -march=arm -O3 test4.ll $(DEBUG)
+		-mthumb -mfpu=neon -mfloat-abi=hard -S -emit-llvm -std=c++11 -O3 test4_arm.cpp \
+		-I/usr/arm-linux-gnueabihf/include/ -I../third/clang+llvm-7.0.0-armv7a-linux-gnueabihf/include/c++/v1/ \
+                -I../third/clang+llvm-7.0.0-armv7a-linux-gnueabihf/lib/clang/7.0.0/include/ \
+		-L../third/clang+llvm-7.0.0-armv7a-linux-gnueabihf/lib/
+	../llvm7.0.1/build/bin/llc -march=arm -O3 test4_arm.ll $(DEBUG)
 	../llvm7.0.1/build/bin/clang++ --target=arm-linux-gnueabihf -mcpu=cortex-a9 \
-		-mthumb -mfpu=neon -mfloat-abi=hard -S -std=c++11 -O3 test4.cpp
+		-mthumb -mfpu=neon -mfloat-abi=hard -S -std=c++11 -O3 test4_arm.cpp \
+		-I/usr/arm-linux-gnueabihf/include/ -I../third/clang+llvm-7.0.0-armv7a-linux-gnueabihf/include/c++/v1/ \
+                -I../third/clang+llvm-7.0.0-armv7a-linux-gnueabihf/lib/clang/7.0.0/include/ \
+		-L../third/clang+llvm-7.0.0-armv7a-linux-gnueabihf/lib/
 	../llvm7.0.1/build/bin/clang++ --target=arm-linux-gnueabihf -mcpu=cortex-a9 \
-		-mthumb -mfpu=neon -mfloat-abi=hard -std=c++11 -O3 test4.cpp -o test4.out
+		-mthumb -mfpu=neon -mfloat-abi=hard -std=c++11 -O3 test4_arm.cpp -o test4_arm.out \
+		-I/usr/arm-linux-gnueabihf/include/ -I../third/clang+llvm-7.0.0-armv7a-linux-gnueabihf/include/c++/v1/ \
+                -I../third/clang+llvm-7.0.0-armv7a-linux-gnueabihf/lib/clang/7.0.0/include/ \
+		-L../third/clang+llvm-7.0.0-armv7a-linux-gnueabihf/lib/
 
 test4_x86.out:
 	@echo "**  test4(x86)  **"
@@ -60,15 +69,24 @@ test4_x86.out:
 	../llvm7.0.1/build/bin/clang++ -march=core-avx2 \
 		-std=c++11 -O3 test4_x86.cpp -o test4_x86.out
 
-test5.out:
+test5_arm.out:
 	@echo "**  test5(arm)  **"
 	../llvm7.0.1/build/bin/clang++ --target=arm-linux-gnueabihf -mcpu=cortex-a9 \
-		-mthumb -mfpu=neon -mfloat-abi=hard -S -emit-llvm -std=c++11 -O3 test5.cpp
-	../llvm7.0.1/build/bin/llc -march=arm -O3 test5.ll $(DEBUG)
+		-mthumb -mfpu=neon -mfloat-abi=hard -S -emit-llvm -std=c++11 -stdlib=libc++ -O3 test5_arm.cpp \
+		-I/usr/arm-linux-gnueabihf/include/ -I../third/clang+llvm-7.0.0-armv7a-linux-gnueabihf/include/c++/v1/ \
+                -I../third/clang+llvm-7.0.0-armv7a-linux-gnueabihf/lib/clang/7.0.0/include/ \
+		-L../third/clang+llvm-7.0.0-armv7a-linux-gnueabihf/lib/
+	../llvm7.0.1/build/bin/llc -march=arm -O3 test5_arm.ll $(DEBUG)
 	../llvm7.0.1/build/bin/clang++ --target=arm-linux-gnueabihf -mcpu=cortex-a9 \
-		-mthumb -mfpu=neon -mfloat-abi=hard -S -std=c++11 -O3 test5.cpp
+		-mthumb -mfpu=neon -mfloat-abi=hard -S -std=c++11 -stdlib=libc++ -O3 test5_arm.cpp \
+		-I/usr/arm-linux-gnueabihf/include/ -I../third/clang+llvm-7.0.0-armv7a-linux-gnueabihf/include/c++/v1/ \
+                -I../third/clang+llvm-7.0.0-armv7a-linux-gnueabihf/lib/clang/7.0.0/include/ \
+		-L../third/clang+llvm-7.0.0-armv7a-linux-gnueabihf/lib/
 	../llvm7.0.1/build/bin/clang++ --target=arm-linux-gnueabihf -mcpu=cortex-a9 \
-		-mthumb -mfpu=neon -mfloat-abi=hard -std=c++11 -O3 test5.cpp -o test5.out
+		-mthumb -mfpu=neon -mfloat-abi=hard -std=c++11 -stdlib=libc++ -O3 test5_arm.cpp -o test5_arm.out \
+		-I/usr/arm-linux-gnueabihf/include/ -I../third/clang+llvm-7.0.0-armv7a-linux-gnueabihf/include/c++/v1/ \
+                -I../third/clang+llvm-7.0.0-armv7a-linux-gnueabihf/lib/clang/7.0.0/include/ \
+		-L../third/clang+llvm-7.0.0-armv7a-linux-gnueabihf/lib/
 
 test5_x86.out:
 	@echo "**  test5(x86)  **"
