@@ -11,7 +11,7 @@ namespace bitvector {
     return a;
   }
 
-  unsigned int get(v32i1 a) {
+  uint32_t get(v32i1 a) {
     union ret_t {
       v32i1    vec;
       uint32_t ret_i;
