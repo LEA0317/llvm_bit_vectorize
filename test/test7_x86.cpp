@@ -26,9 +26,7 @@ namespace bitvector {
       v64i1    vec;
       uint64_t ret_i;
     } t;
-    for (int i=0; i<64; i++) {
-      t.vec[i] = a[i];
-    }
+    t.vec = a;
     return t.ret_i;
   }
 

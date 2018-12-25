@@ -128,3 +128,10 @@ test8_arm.out:
 		-I/usr/arm-linux-gnueabihf/include/ -I../third/clang+llvm-7.0.0-armv7a-linux-gnueabihf/include/c++/v1/ \
                 -I../third/clang+llvm-7.0.0-armv7a-linux-gnueabihf/lib/clang/7.0.0/include/ \
 		-L../third/clang+llvm-7.0.0-armv7a-linux-gnueabihf/lib/
+
+bitvector.out:
+	@echo "**  class test  **"
+	../llvm7.0.1/build/bin/clang++ -march=core-avx2 \
+		-S -std=c++11 -O3 bitvector.cpp
+	../llvm7.0.1/build/bin/clang++ -march=core-avx2 \
+		-std=c++11 -O3 bitvector.cpp -o bitvector.out
